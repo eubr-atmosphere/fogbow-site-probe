@@ -34,7 +34,7 @@ public abstract class Probe implements Runnable {
     private static int messageId = 0;
 
     protected void setup() {
-        this.client = new BackgroundClient();
+        this.client = new BackgroundClient("https://158.42.104.30:32025/monitor");
         client.authenticate(probeId, "pass".getBytes());
         boolean startFlag = client.start();
 

@@ -14,24 +14,24 @@ install-docker() {
     echo "--> Installing docker"
     apt update
 
-    apt-get install -y \
+    sudo apt-get install -y \
         apt-transport-https \
         ca-certificates \
         curl \
         software-properties-common
     
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
-    apt-key fingerprint 0EBFCD88
+    sudo apt-key fingerprint 0EBFCD88
 
-    add-apt-repository \
+    sudo add-apt-repository \
     "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
     $(lsb_release -cs) \
     stable"
 
-    apt-get update
+    sudo apt-get update
 
-    apt-get install -y docker-ce
+    sudo apt-get install -y docker-ce
 }
 
 CHECK_DOCKER_INSTALLATION=$(dpkg -l | grep -c docker-ce)
@@ -64,5 +64,5 @@ sudo docker exec $container_id /bin/bash -c "sed -i 's,spring.datasource.usernam
 sudo docker exec $container_id /bin/bash -c "sed -i 's,spring.datasource.password.*,spring.datasource.password=$db_password,' /app/probes/src/main/resources/application.properties"
 sudo docker exec $container_id /bin/bash -c "rm -rf /usr/share/maven/boot/plexus-classworlds-2.5.2.jar"
 sudo docker exec $container_id /bin/bash -c "keytool -import -trustcacerts -keystore /usr/lib/jvm/java-1.8.0-openjdk-amd64/jre/lib/security/cacerts -storepass changeit -noprompt -alias monitor -file cert.pem"
-sudo docker exec -d $container_id /bin/bash -c "cd /app/java-client-lib && mvn clean install && cd /app/probes && mvn clean install && mvn spring-boot:run -X > log.out 2> log.err" &
+sudo docker exec $container_id /bin/bash -c "cd /app/java-client-lib && mvn clean install && cd /app/probes && mvn clean install && mvn spring-boot:run -X > log.out 2> log.err" &
 
