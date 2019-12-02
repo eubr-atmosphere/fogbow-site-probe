@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @Component
@@ -16,7 +17,7 @@ public class FogbowServiceLatencyProbe extends Probe {
     private int SLEEP_TIME;
 
     public FogbowServiceLatencyProbe() throws Exception{
-        this.lastTimestampAwake = new Timestamp(System.currentTimeMillis());
+        this.lastTimestampAwake = new Timestamp(Calendar.getInstance().getTimeInMillis());
 
         String path = Thread.currentThread().getContextClassLoader().getResource("").getPath() + "private/";
         this.properties = new PropertiesUtil().readProperties(path + Constants.CONF_FILE);
@@ -36,7 +37,7 @@ public class FogbowServiceLatencyProbe extends Probe {
             latenciesWrapper.add(latencies[0]);
 
             this.firstTimeAwake = false;
-            this.lastTimestampAwake = new Timestamp(System.currentTimeMillis());
+            this.lastTimestampAwake = new Timestamp(Calendar.getInstance().getTimeInMillis());
 
             if(!latencies[0].isEmpty()) {
                 this.resourceId = Integer.valueOf(properties.getProperty(Constants.COMPUTE_RESOURCE_ID));

@@ -18,6 +18,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class FogbowServiceReachabilityProbe extends Probe {
     private String MS_ENDPOINT;
 
     public FogbowServiceReachabilityProbe() throws Exception{
-        this.lastTimestampAwake = new Timestamp(System.currentTimeMillis());
+        this.lastTimestampAwake = new Timestamp(Calendar.getInstance().getTimeInMillis());
 
         String path = Thread.currentThread().getContextClassLoader().getResource("").getPath() + "private/";
         this.properties = new PropertiesUtil().readProperties(path + Constants.CONF_FILE);
@@ -55,7 +56,7 @@ public class FogbowServiceReachabilityProbe extends Probe {
         setup();
 
         while (true) {
-            lastTimestampAwake = new Timestamp(System.currentTimeMillis());
+            lastTimestampAwake = new Timestamp(Calendar.getInstance().getTimeInMillis());
 
             for(int i = 0; i < N_REQUESTS_PER_CICLE; i++) {
                 doGetRequest();

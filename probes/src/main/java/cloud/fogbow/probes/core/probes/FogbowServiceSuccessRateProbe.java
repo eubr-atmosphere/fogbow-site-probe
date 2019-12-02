@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @Component
@@ -17,7 +18,7 @@ public class FogbowServiceSuccessRateProbe extends Probe {
     private int SLEEP_TIME;
 
     public FogbowServiceSuccessRateProbe() throws Exception{
-        this.lastTimestampAwake = new Timestamp(System.currentTimeMillis());
+        this.lastTimestampAwake = new Timestamp(Calendar.getInstance().getTimeInMillis());
 
         String path = Thread.currentThread().getContextClassLoader().getResource("").getPath() + "private/";
         this.properties = new PropertiesUtil().readProperties(path + Constants.CONF_FILE);
@@ -31,7 +32,7 @@ public class FogbowServiceSuccessRateProbe extends Probe {
         setup();
 
         while(true) {
-            Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
+            Timestamp currentTimestamp = new Timestamp(Calendar.getInstance().getTimeInMillis());
 
             List<List<Pair<Number, Timestamp>>> computeData = getData(ResourceType.COMPUTE, currentTimestamp);
             List<List<Pair<Number, Timestamp>>> volumeData = getData(ResourceType.VOLUME, currentTimestamp);
