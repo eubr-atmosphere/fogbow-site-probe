@@ -130,7 +130,7 @@ public class DataProviderService {
         for(String key: ordersLatency.keySet()) {
             Pair<Timestamp, Timestamp> current = ordersLatency.get(key);
             if(current.getKey() != null && current.getValue() != null ) {
-                long latency = current.getValue().getTime() - current.getKey().getTime();
+                long latency = ((current.getValue().getTime())/1000L) - ((current.getKey().getTime())/1000L);
                 latencies.add(new Pair(latency, current.getValue()));
             }
         }

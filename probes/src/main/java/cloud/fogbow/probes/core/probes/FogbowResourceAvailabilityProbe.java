@@ -68,7 +68,7 @@ public class FogbowResourceAvailabilityProbe extends Probe {
 
         l1.add(new Pair(providerService.getFailed(lastTimestampAwake, firstTimeAwake, type).size(), currentTimestamp));
         l2.add(new Pair(providerService.getFulfilled(lastTimestampAwake, firstTimeAwake, type).size(), currentTimestamp));
-        l3.add(new Pair(currentTimestamp.getTime() - lastTimestampAwake.getTime(), currentTimestamp));
+        l3.add(new Pair(((currentTimestamp.getTime())/1000L) - ((lastTimestampAwake.getTime())/1000L), currentTimestamp));
 
         results.add(l1);
         results.add(l2);

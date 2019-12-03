@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
 
@@ -54,7 +55,7 @@ public abstract class Probe implements Runnable {
 
         for(List<Pair<Number, Timestamp>> obs: dataValues) {
             for(Pair<Number, Timestamp> ob : obs) {
-                observations.add(new Observation(ob.getValue().getTime(), ob.getKey().doubleValue()));
+                observations.add(new Observation((ob.getValue().getTime())/1000L, ob.getKey().doubleValue()));
             }
 
             this.message.addData(new Data(
@@ -67,6 +68,7 @@ public abstract class Probe implements Runnable {
             observations.clear();
         }
 
+        this.message.setSentTime((Calendar.getInstance().getTimeInMillis())/1000L);
         client.send(message);
     }
 

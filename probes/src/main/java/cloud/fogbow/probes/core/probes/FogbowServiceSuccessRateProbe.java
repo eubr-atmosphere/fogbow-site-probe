@@ -69,7 +69,7 @@ public class FogbowServiceSuccessRateProbe extends Probe {
 
         l1.add(new Pair(providerService.getFailedOnRequest(lastTimestampAwake, firstTimeAwake, type).size(), currentTimestamp));
         l2.add(new Pair(providerService.getOpened(lastTimestampAwake, firstTimeAwake, type).size(), currentTimestamp));
-        l3.add(new Pair(currentTimestamp.getTime() - lastTimestampAwake.getTime(), currentTimestamp));
+        l3.add(new Pair(((currentTimestamp.getTime())/1000L) - ((lastTimestampAwake.getTime())/1000L), currentTimestamp));
 
         results.add(l1);
         results.add(l2);

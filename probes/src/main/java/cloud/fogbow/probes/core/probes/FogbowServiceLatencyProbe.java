@@ -39,6 +39,7 @@ public class FogbowServiceLatencyProbe extends Probe {
             this.firstTimeAwake = false;
             this.lastTimestampAwake = new Timestamp(Calendar.getInstance().getTimeInMillis());
 
+
             if(!latencies[0].isEmpty()) {
                 this.resourceId = Integer.valueOf(properties.getProperty(Constants.COMPUTE_RESOURCE_ID));
                 sendMessage(latenciesWrapper);
